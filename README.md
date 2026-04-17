@@ -64,7 +64,7 @@ After installation, go to **Dashboard → Plugins → One Pace** to configure:
 
 ## Supported File Naming
 
-The plugin recognizes One Pace content in several ways:
+The plugin recognizes the standard file and folder naming that One Pace releases use — no renaming needed after download.
 
 ### Tagged filenames (recommended)
 ```
