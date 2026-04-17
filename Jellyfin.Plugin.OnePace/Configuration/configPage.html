@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>One Pace</title>
+</head>
+<body>
+    <div id="OnePaceConfigPage" data-role="page" class="page type-interior pluginConfigurationPage" data-require="emby-input,emby-button,emby-select">
+        <div data-role="content">
+            <div class="content-primary">
+                <h1>One Pace Plugin Settings</h1>
+                <p>This plugin provides metadata integration for the <a href="https://onepace.net/" target="_blank">One Pace</a> project — a fan edit of One Piece that removes filler and improves pacing.</p>
+                <br/>
+                <form id="OnePaceConfigForm">
+                    <div class="selectContainer">
+                        <label class="selectLabel" for="PreferredMetadataLanguage">Preferred Metadata Language</label>
+                        <select is="emby-select" id="PreferredMetadataLanguage" name="PreferredMetadataLanguage" class="emby-select-withcolor emby-select">
+                            <option value="en">English</option>
+                            <option value="ja">Japanese</option>
+                            <option value="fr">French</option>
+                            <option value="de">German</option>
+                            <option value="es">Spanish</option>
+                            <option value="pt">Portuguese</option>
+                            <option value="it">Italian</option>
+                            <option value="ru">Russian</option>
+                            <option value="zh">Chinese</option>
+                            <option value="ko">Korean</option>
+                            <option value="ar">Arabic</option>
+                        </select>
+                        <div class="fieldDescription">The language to use for arc and episode names/descriptions when available from the One Pace API.</div>
+                    </div>
+                    <br/>
+                    <div class="inputContainer">
+                        <label class="inputLabel" for="LibraryPath">One Pace Library Path</label>
+                        <input is="emby-input" type="text" id="LibraryPath" name="LibraryPath" class="emby-input" placeholder="/Volumes/Plex/Media/Anime/One Pace" />
+                        <div class="fieldDescription">The full path to your One Pace folder on the server. Any media under this path will be identified as One Pace content, even without <code>[One Pace]</code> tags in file/folder names.</div>
+                    </div>
+                    <br/>
+                    <h2>Library Setup</h2>
+                    <p>Organize your One Pace files in the following folder structure:</p>
+                    <pre style="background: #1a1a2e; padding: 12px; border-radius: 4px; overflow-x: auto;">
+/media/anime/
+├── One Pace/
+│   ├── [One Pace][1-7] Romance Dawn [1080p]/
+│   │   ├── [One Pace][1] Romance Dawn 01 [1080p][D767799C].mkv
+│   │   └── [One Pace][2] Romance Dawn 02 [1080p][04A43CEF].mkv
+│   ├── [One Pace][237-303] Skypiea [720p]/
+│   │   ├── [One Pace][237-238] Skypiea 01 [720p][En Dub][5B9B150E].mp4
+│   │   └── [One Pace][239-240] Skypiea 02 [720p][En Dub][ABCD1234].mp4</pre>
+                    <p><strong>Important:</strong> Enable the "One Pace" downloaders for Metadata (Shows, Seasons, Episodes) and Image fetchers in your library settings, and move them to the top.</p>
+                    <div>
+                        <button is="emby-button" type="submit" class="raised button-submit block emby-button">
+                            <span>Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var OnePaceConfig = {
+            pluginUniqueId: 'a1b2c3d4-1234-5678-9abc-def012345678'
+        };
+
+        document.querySelector('#OnePaceConfigPage')
+            .addEventListener('pageshow', function() {
+                Dashboard.showLoadingMsg();
+                ApiClient.getPluginConfiguration(OnePaceConfig.pluginUniqueId).then(function (config) {
+                    document.querySelector('#PreferredMetadataLanguage').value = config.PreferredMetadataLanguage || 'en';
+                    document.querySelector('#LibraryPath').value = config.LibraryPath || '';
+                    Dashboard.hideLoadingMsg();
+                });
+            });
+
+        document.querySelector('#OnePaceConfigForm')
+            .addEventListener('submit', function(e) {
+                Dashboard.showLoadingMsg();
+                ApiClient.getPluginConfiguration(OnePaceConfig.pluginUniqueId).then(function (config) {
+                    config.PreferredMetadataLanguage = document.querySelector('#PreferredMetadataLanguage').value;
+                    config.LibraryPath = document.querySelector('#LibraryPath').value;
+                    ApiClient.updatePluginConfiguration(OnePaceConfig.pluginUniqueId, config).then(function (result) {
+                        Dashboard.processPluginConfigurationUpdateResult(result);
+                    });
+                });
+                e.preventDefault();
+                return false;
+            });
+    </script>
+</body>
+</html>

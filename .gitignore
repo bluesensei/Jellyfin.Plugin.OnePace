@@ -1,0 +1,11 @@
+bin/
+obj/
+publish/
+publish2/
+publish3/
+*.user
+*.suo
+*.log
+.vs/
+.vscode/
+one-pace-jellyfin-master/
