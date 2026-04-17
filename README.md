@@ -76,8 +76,9 @@ The plugin recognizes One Pace content in several ways:
 ```
 One Pace/
 ├── [237-303] Skypiea [En Dub][1080p]/
-│   ├── episode1.mkv
-│   └── episode2.mkv
+│   ├── [One Pace][237-238] Skypiea 01 [720p][En Dub][5B9B150E].mkv
+│   ├── [One Pace][239-240] Skypiea 02 [720p][En Dub][A1B2C3D4].mkv
+│   └── ...
 └── [304-322] Long Ring Long Land [1080p]/
     └── ...
 ```
