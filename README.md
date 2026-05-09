@@ -42,6 +42,7 @@ Works in shared Anime libraries alongside other shows — no separate library ne
        └── ...
    ```
 4. Restart Jellyfin
+5. Right click "One Pace" in your library, "Reload metadata", "Refresh metadata", "Replace all metadata"
 
 ### From Source
 
